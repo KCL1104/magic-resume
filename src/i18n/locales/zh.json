@@ -1,4 +1,24 @@
 {
+  "agent": {
+    "triggerButton": "AI 助手",
+    "triggerTooltip": "用对话让 AI 直接修改这份简历",
+    "title": "AI 助手",
+    "subtitle": "告诉我怎么改这份简历，我会直接帮你应用修改。",
+    "emptyHint": "告诉我你想改什么，例如：",
+    "example1": "把技能栏调整为突出 TypeScript 与测试。",
+    "example2": "把我最近一份工作的经历改写得更有成果导向。",
+    "example3": "加一段自我评价，概括我的经验。",
+    "inputPlaceholder": "让 AI 帮你修改简历...",
+    "send": "发送",
+    "stop": "停止",
+    "thinking": "思考中...",
+    "undo": "撤销上一次 AI 修改",
+    "reverted": "已还原到上一次 AI 修改之前。",
+    "stopped": "已停止。",
+    "unsupportedProvider": "当前 AI 服务商不支持工具调用，请在 AI 设置中切换到 OpenAI、Gemini 或 DeepSeek。",
+    "noResume": "请先打开一份简历。",
+    "error": "AI 助手出错了，请重试。"
+  },
   "common": {
     "title": "魔方简历",
     "subtitle": "AI 驱动简历编辑器",

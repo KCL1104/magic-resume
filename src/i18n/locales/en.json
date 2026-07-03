@@ -1,4 +1,24 @@
 {
+  "agent": {
+    "triggerButton": "AI Assistant",
+    "triggerTooltip": "Edit this resume by chatting with AI",
+    "title": "AI Assistant",
+    "subtitle": "Ask me to edit this resume — I'll apply the changes directly.",
+    "emptyHint": "Tell me what to change. For example:",
+    "example1": "Tailor my skills to emphasize TypeScript and testing.",
+    "example2": "Rewrite my most recent job's bullets to be more results-driven.",
+    "example3": "Add a self-evaluation summarizing my experience.",
+    "inputPlaceholder": "Ask the AI to edit your resume...",
+    "send": "Send",
+    "stop": "Stop",
+    "thinking": "Thinking...",
+    "undo": "Undo the last AI change",
+    "reverted": "Reverted the resume to before the last AI change.",
+    "stopped": "Stopped.",
+    "unsupportedProvider": "The selected AI provider does not support tool calling. Switch to OpenAI, Gemini or DeepSeek in AI settings.",
+    "noResume": "Open a resume first.",
+    "error": "The AI assistant hit an error. Please try again."
+  },
   "common": {
     "title": "Magic Resume",
     "subtitle": "AI Driven Resume Editor",

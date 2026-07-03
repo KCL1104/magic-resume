@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "@/i18n/compat/client";
-import { AlertCircle, ShieldCheck, ShieldAlert, Edit2 } from "lucide-react";
+import { AlertCircle, ShieldCheck, ShieldAlert, Edit2, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "@/lib/navigation";
 import { Input } from "@/components/ui/input";
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { GrammarCheckDrawer } from "./grammar/GrammarCheckDrawer";
+import { AgentChatPanel } from "./agent/AgentChatPanel";
 import { getFileHandle, getConfig } from "@/utils/fileSystem";
 
 interface EditorHeaderProps {
@@ -150,6 +151,25 @@ export function EditorHeader({ isMobile }: EditorHeaderProps) {
 
         <div className="flex items-center space-x-3">
           <GrammarCheckDrawer />
+          <AgentChatPanel />
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-primary/40 text-primary hover:bg-primary/10"
+                  onClick={() =>
+                    document.dispatchEvent(new CustomEvent("open-agent-panel"))
+                  }
+                >
+                  <Sparkles className="h-4 w-4 sm:mr-1.5" />
+                  <span className="hidden sm:inline">{t("agent.triggerButton")}</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>{t("agent.triggerTooltip")}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           {errors.length > 0 && (
              <div 
                 className="flex items-center space-x-1 cursor-pointer animate-pulse"
