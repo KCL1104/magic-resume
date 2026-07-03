@@ -1,9 +1,12 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { AI_MODEL_CONFIGS, AIModelType } from "@/config/ai";
+import type { GenerationLanguage } from "@/lib/ai/language";
 
 interface AIConfigState {
   selectedModel: AIModelType;
+  /** Preferred content generation language, independent of the UI locale. */
+  generationLanguage: GenerationLanguage;
   doubaoApiKey: string;
   doubaoModelId: string;
   deepseekApiKey: string;
@@ -23,6 +26,7 @@ interface AIConfigState {
   setOpenaiApiEndpoint: (endpoint: string) => void;
   setGeminiApiKey: (apiKey: string) => void;
   setGeminiModelId: (modelId: string) => void;
+  setGenerationLanguage: (language: GenerationLanguage) => void;
   isConfigured: () => boolean;
 }
 
@@ -30,6 +34,7 @@ export const useAIConfigStore = create<AIConfigState>()(
   persist(
     (set, get) => ({
       selectedModel: "doubao",
+      generationLanguage: "en",
       doubaoApiKey: "",
       doubaoModelId: "",
       deepseekApiKey: "",
@@ -49,6 +54,8 @@ export const useAIConfigStore = create<AIConfigState>()(
       setOpenaiApiEndpoint: (endpoint: string) => set({ openaiApiEndpoint: endpoint }),
       setGeminiApiKey: (apiKey: string) => set({ geminiApiKey: apiKey }),
       setGeminiModelId: (modelId: string) => set({ geminiModelId: modelId }),
+      setGenerationLanguage: (language: GenerationLanguage) =>
+        set({ generationLanguage: language }),
       isConfigured: () => {
         const state = get();
         const config = AI_MODEL_CONFIGS[state.selectedModel];

@@ -141,6 +141,31 @@
         "copyFailed": "Copy failed."
       }
     },
+    "applications": {
+      "title": "Applications",
+      "subtitle": "Each job you apply to, with its tailored resume and cover letter — ready to submit.",
+      "newApplication": "New Application",
+      "newApplicationDescription": "Paste a JD and generate a tailored resume + cover letter.",
+      "empty": "No applications yet. Create one from a job description.",
+      "notFound": "This application no longer exists.",
+      "backToList": "Back to applications",
+      "openResume": "Open resume in editor",
+      "resumePreview": "Resume preview",
+      "resumeMissing": "The linked resume was not found.",
+      "jobDescription": "Job description",
+      "noJd": "No job description saved.",
+      "coverLetter": "Cover letter",
+      "coverLetterPlaceholder": "Write or edit your cover letter...",
+      "status": {
+        "draft": "Draft",
+        "ready": "Ready",
+        "submitted": "Submitted",
+        "interviewing": "Interviewing",
+        "offer": "Offer",
+        "rejected": "Rejected",
+        "archived": "Archived"
+      }
+    },
     "resumes": {
       "created": "Created At",
       "synced": "Synced Files",

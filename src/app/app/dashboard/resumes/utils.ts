@@ -2,6 +2,8 @@ import { generateUUID } from "@/utils/uuid";
 import { initialResumeState } from "@/config/initialResumeData";
 import { DEFAULT_TEMPLATES } from "@/config";
 
+type ResumeSeed = typeof initialResumeState;
+
 export const escapeHtml = (value: string) =>
   value
     .replace(/&/g, "&amp;")
@@ -59,7 +61,11 @@ export const extractJsonContent = (content: string) => {
   throw new Error("Invalid AI JSON content");
 };
 
-export const createResumeFromAIResult = (result: any, fileName: string) => {
+export const createResumeFromAIResult = (
+  result: any,
+  fileName: string,
+  seed: ResumeSeed = initialResumeState
+) => {
   const now = new Date().toISOString();
   const id = generateUUID();
 
@@ -71,14 +77,14 @@ export const createResumeFromAIResult = (result: any, fileName: string) => {
   const skillContent = toListHtml(skillSource);
 
   return {
-    ...initialResumeState,
+    ...seed,
     id,
     title: toString(result?.title) || fileName || `Imported Resume ${id.slice(0, 6)}`,
     createdAt: now,
     updatedAt: now,
     templateId: DEFAULT_TEMPLATES[0]?.id,
     basic: {
-      ...initialResumeState.basic,
+      ...seed.basic,
       name: toString(result?.basic?.name),
       title: toString(result?.basic?.title),
       email: toString(result?.basic?.email),

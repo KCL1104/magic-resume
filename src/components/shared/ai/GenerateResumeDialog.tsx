@@ -3,7 +3,7 @@ import { Loader2, Sparkles, Upload, FileText, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { Streamdown } from "streamdown";
 import "streamdown/styles.css";
-import { useTranslations, useLocale } from "@/i18n/compat/client";
+import { useTranslations } from "@/i18n/compat/client";
 import { useRouter } from "@/lib/navigation";
 import {
   Dialog,
@@ -30,8 +30,10 @@ import {
   type GenerationLanguage,
 } from "@/lib/ai/language";
 import { useAIConfiguration } from "@/hooks/useAIConfiguration";
+import { useAIConfigStore } from "@/store/useAIConfigStore";
 import { useResumeStore } from "@/store/useResumeStore";
 import { createResumeFromAIResult } from "@/app/app/dashboard/resumes/utils";
+import { initialResumeState, initialResumeStateEn } from "@/config/initialResumeData";
 import { extractImagesFromPdf, extractTextFromPdf } from "@/lib/pdf";
 
 interface GenerateResumeDialogProps {
@@ -63,19 +65,18 @@ export default function GenerateResumeDialog({
   navigateOnApply = true,
 }: GenerateResumeDialogProps) {
   const t = useTranslations("dashboard.generate");
-  const locale = useLocale();
   const router = useRouter();
   const { checkConfiguration } = useAIConfiguration();
   const addResume = useResumeStore((s) => s.addResume);
   const setActiveResume = useResumeStore((s) => s.setActiveResume);
+  const storedLanguage = useAIConfigStore((s) => s.generationLanguage);
+  const setStoredLanguage = useAIConfigStore((s) => s.setGenerationLanguage);
 
   const [jd, setJd] = useState("");
   const [pastedResume, setPastedResume] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileText, setFileText] = useState<string>("");
-  const [language, setLanguage] = useState<GenerationLanguage>(
-    locale === "en" ? "en" : "zh-TW"
-  );
+  const [language, setLanguage] = useState<GenerationLanguage>(storedLanguage);
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<GenerateResult | null>(null);
   const [copied, setCopied] = useState(false);
@@ -202,9 +203,15 @@ export default function GenerateResumeDialog({
 
   const handleApply = () => {
     if (!result) return;
+    // Use a language-matched seed so section headers (Skills/Experience vs
+    // 专业技能/工作经验) match the generated content language.
+    const seed = language.startsWith("zh")
+      ? initialResumeState
+      : initialResumeStateEn;
     const resume = createResumeFromAIResult(
       result.resume,
-      result.resume?.title || ""
+      result.resume?.title || "",
+      seed
     );
     const resumeId = addResume(resume);
     setActiveResume(resumeId);
@@ -319,7 +326,10 @@ export default function GenerateResumeDialog({
                 <Label>{t("languageLabel")}</Label>
                 <Select
                   value={language}
-                  onValueChange={(v) => setLanguage(v as GenerationLanguage)}
+                  onValueChange={(v) => {
+                    setLanguage(v as GenerationLanguage);
+                    setStoredLanguage(v as GenerationLanguage);
+                  }}
                   disabled={isGenerating}
                 >
                   <SelectTrigger className="w-[180px]">

@@ -30,6 +30,27 @@ export const IconResumes: React.FC<IconProps> = ({ size = 24, className, active 
   </svg>
 );
 
+// Applications: Flat Violet briefcase with a tracking dot
+export const IconApplications: React.FC<IconProps> = ({ size = 24, className, active }) => (
+  <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    {/* Base Background - Bright Violet */}
+    <rect x="4" y="4" width="32" height="32" rx="6" fill="#7C3AED" />
+
+    {/* Briefcase body */}
+    <rect x="9" y="15" width="22" height="15" rx="2.5" fill="white" />
+    {/* Handle */}
+    <rect x="15" y="10" width="10" height="6" rx="2" stroke="white" strokeWidth="2.5" fill="none" />
+    {/* Latch line */}
+    <rect x="9" y="21" width="22" height="2.5" fill="#7C3AED" fillOpacity="0.85" />
+    <rect x="18" y="20" width="4" height="4" rx="1" fill="#7C3AED" />
+
+    {/* Status indicator - Flat Green disk */}
+    {active && (
+      <circle cx="32" cy="32" r="5" fill="#52C41A" stroke="white" strokeWidth="2" />
+    )}
+  </svg>
+);
+
 // Templates: 4-Color Grid (Vivid & Flat)
 export const IconTemplates: React.FC<IconProps> = ({ size = 24, className, active }) => (
   <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>

@@ -142,6 +142,31 @@
         "copyFailed": "复制失败。"
       }
     },
+    "applications": {
+      "title": "投递管理",
+      "subtitle": "每个应聘的职位，配上量身定制的简历与求职信，随时可投递。",
+      "newApplication": "新建投递",
+      "newApplicationDescription": "粘贴 JD，生成量身定制的简历与求职信。",
+      "empty": "还没有投递记录，从一份 JD 开始创建吧。",
+      "notFound": "该投递记录已不存在。",
+      "backToList": "返回投递列表",
+      "openResume": "在编辑器中打开简历",
+      "resumePreview": "简历预览",
+      "resumeMissing": "未找到关联的简历。",
+      "jobDescription": "职位描述",
+      "noJd": "未保存职位描述。",
+      "coverLetter": "求职信",
+      "coverLetterPlaceholder": "撰写或编辑你的求职信...",
+      "status": {
+        "draft": "草稿",
+        "ready": "待投递",
+        "submitted": "已投递",
+        "interviewing": "面试中",
+        "offer": "已录用",
+        "rejected": "已拒绝",
+        "archived": "已归档"
+      }
+    },
     "resumes": {
       "created": "创建于",
       "synced": "已备份文件夹",
