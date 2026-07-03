@@ -177,6 +177,19 @@
       "noJd": "未保存职位描述。",
       "coverLetter": "求职信",
       "coverLetterPlaceholder": "撰写或编辑你的求职信...",
+      "export": {
+        "label": "导出",
+        "resumeGroup": "简历",
+        "resumePdf": "导出简历 PDF",
+        "coverGroup": "求职信",
+        "coverPdf": "导出求职信 PDF",
+        "coverMd": "导出求职信 Markdown",
+        "coverPrint": "打印求职信",
+        "noCover": "还没有可导出的求职信。",
+        "resumeDone": "简历 PDF 已导出。",
+        "coverDone": "求职信 PDF 已导出。",
+        "failed": "导出失败，请重试。"
+      },
       "status": {
         "draft": "草稿",
         "ready": "待投递",

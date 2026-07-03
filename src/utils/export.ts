@@ -6,7 +6,7 @@ import { generateResumeMarkdown, ResumeMarkdownOptions } from "@/utils/markdown"
 
 const INVALID_FILE_NAME_CHAR_REGEX = /[\\/:*?"<>|]/g;
 
-const getSafeFileName = (title?: string) => {
+export const getSafeFileName = (title?: string) => {
   const normalized = (title || "resume")
     .trim()
     .replace(INVALID_FILE_NAME_CHAR_REGEX, "_")
@@ -15,7 +15,7 @@ const getSafeFileName = (title?: string) => {
   return normalized || "resume";
 };
 
-const downloadBlob = (blob: Blob, fileName: string) => {
+export const downloadBlob = (blob: Blob, fileName: string) => {
   const url = window.URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;

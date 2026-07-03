@@ -176,6 +176,19 @@
       "noJd": "No job description saved.",
       "coverLetter": "Cover letter",
       "coverLetterPlaceholder": "Write or edit your cover letter...",
+      "export": {
+        "label": "Export",
+        "resumeGroup": "Resume",
+        "resumePdf": "Resume as PDF",
+        "coverGroup": "Cover letter",
+        "coverPdf": "Cover letter as PDF",
+        "coverMd": "Cover letter as Markdown",
+        "coverPrint": "Print cover letter",
+        "noCover": "There is no cover letter to export yet.",
+        "resumeDone": "Resume PDF exported.",
+        "coverDone": "Cover letter PDF exported.",
+        "failed": "Export failed. Please try again."
+      },
       "status": {
         "draft": "Draft",
         "ready": "Ready",

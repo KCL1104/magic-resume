@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { ArrowLeft, ExternalLink, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, ExternalLink, Download, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { useTranslations } from "@/i18n/compat/client";
 import { useRouter } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import RichTextEditor from "@/components/shared/rich-editor/RichEditor";
 import ResumeTemplateComponent from "@/components/templates";
@@ -19,6 +28,14 @@ import { useApplicationStore } from "@/store/useApplicationStore";
 import { useResumeStore } from "@/store/useResumeStore";
 import { APPLICATION_STATUSES } from "@/types/application";
 import { LANGUAGE_LABEL } from "@/lib/ai/language";
+import { exportToPdf } from "@/utils/export";
+import {
+  exportCoverLetterToPdf,
+  exportCoverLetterAsMarkdown,
+  exportCoverLetterToBrowserPrint,
+} from "@/utils/coverLetter";
+
+const RESUME_EXPORT_ID = "application-resume-export";
 
 export default function ApplicationDetailPage({ id }: { id: string }) {
   const t = useTranslations();
@@ -34,6 +51,7 @@ export default function ApplicationDetailPage({ id }: { id: string }) {
     application ? s.resumes[application.resumeId] : undefined
   );
   const setActiveResume = useResumeStore((s) => s.setActiveResume);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     if (application) setActiveApplication(application.id);
@@ -64,6 +82,52 @@ export default function ApplicationDetailPage({ id }: { id: string }) {
     if (!resume) return;
     setActiveResume(resume.id);
     router.push({ to: "/app/workbench/$id", params: { id: resume.id } });
+  };
+
+  const coverHtml = application.coverLetter?.content || "";
+  const coverTitle = `${application.title} - Cover Letter`;
+  const requireCover = () => {
+    if (!coverHtml) {
+      toast.error(t("dashboard.applications.export.noCover"));
+      return false;
+    }
+    return true;
+  };
+
+  const exportResumePdf = () => {
+    if (!resume) return;
+    exportToPdf({
+      elementId: RESUME_EXPORT_ID,
+      title: resume.title,
+      pagePadding: resume.globalSettings?.pagePadding ?? 40,
+      fontFamily: resume.globalSettings?.fontFamily,
+      onStart: () => setExporting(true),
+      onEnd: () => setExporting(false),
+      successMessage: t("dashboard.applications.export.resumeDone"),
+      errorMessage: t("dashboard.applications.export.failed"),
+    });
+  };
+
+  const exportCoverPdf = () => {
+    if (!requireCover()) return;
+    exportCoverLetterToPdf({
+      html: coverHtml,
+      title: coverTitle,
+      onStart: () => setExporting(true),
+      onEnd: () => setExporting(false),
+      successMessage: t("dashboard.applications.export.coverDone"),
+      errorMessage: t("dashboard.applications.export.failed"),
+    });
+  };
+
+  const exportCoverMd = () => {
+    if (!requireCover()) return;
+    exportCoverLetterAsMarkdown({ html: coverHtml, title: coverTitle });
+  };
+
+  const exportCoverPrint = () => {
+    if (!requireCover()) return;
+    exportCoverLetterToBrowserPrint(coverHtml, coverTitle);
   };
 
   return (
@@ -108,11 +172,57 @@ export default function ApplicationDetailPage({ id }: { id: string }) {
           {LANGUAGE_LABEL[application.language] || application.language}
         </span>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" disabled={exporting}>
+                {exporting ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Download className="mr-2 h-4 w-4" />
+                )}
+                {t("dashboard.applications.export.label")}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                {t("dashboard.applications.export.resumeGroup")}
+              </DropdownMenuLabel>
+              <DropdownMenuItem onClick={exportResumePdf} disabled={!resume}>
+                {t("dashboard.applications.export.resumePdf")}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>
+                {t("dashboard.applications.export.coverGroup")}
+              </DropdownMenuLabel>
+              <DropdownMenuItem onClick={exportCoverPdf}>
+                {t("dashboard.applications.export.coverPdf")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={exportCoverMd}>
+                {t("dashboard.applications.export.coverMd")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={exportCoverPrint}>
+                {t("dashboard.applications.export.coverPrint")}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button onClick={openInEditor} disabled={!resume}>
             <ExternalLink className="mr-2 h-4 w-4" />
             {t("dashboard.applications.openResume")}
           </Button>
+        </div>
+      </div>
+
+      {/* Hidden full-size resume for high-fidelity PDF export (unscaled). */}
+      <div
+        aria-hidden
+        className="pointer-events-none fixed left-[-10000px] top-0 opacity-0"
+      >
+        <div id={RESUME_EXPORT_ID} className="w-[794px] bg-white">
+          {resume && (
+            <ResumeTemplateComponent data={resume} template={template} />
+          )}
         </div>
       </div>
 
