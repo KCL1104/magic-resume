@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { toast } from "sonner";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { StateStorage } from "zustand/middleware";
 import { getFileHandle, verifyPermission } from "@/utils/fileSystem";
@@ -88,6 +89,17 @@ const warnPersistFailure = (name: string, error: unknown) => {
     `[resume-store] Failed to persist "${name}" to localStorage. Changes remain available in memory for this session.`,
     error
   );
+
+  // Previously this failure was swallowed silently, so a user could keep editing
+  // while nothing was actually saved. Surface it once (deduped per storage key).
+  if (typeof window !== "undefined") {
+    const isEn = document.cookie.includes("NEXT_LOCALE=en");
+    toast.error(
+      isEn
+        ? "Storage is full — recent changes are only kept for this session. Delete some resumes or remove large photos/certificates, then try again."
+        : "存储空间已满，最近的修改仅保留在本次会话中。请删除部分简历或移除大图片/头像后重试。"
+    );
+  }
 };
 
 const createSafeLocalStorage = (): StateStorage => ({

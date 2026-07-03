@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations, useLocale } from "@/i18n/compat/client";
 import { useRouter } from "@/lib/navigation";
-import { Plus, Settings, AlertCircle } from "lucide-react";
+import { Plus, Settings, AlertCircle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +20,7 @@ import { useAIConfigStore } from "@/store/useAIConfigStore";
 import { DEFAULT_TEMPLATES } from "@/config";
 import { CreateResumeModal } from "./CreateResumeModal";
 import { ImportResumeDialog } from "./ImportResumeDialog";
+import GenerateResumeDialog from "@/components/shared/ai/GenerateResumeDialog";
 import { ResumeCardItem } from "./ResumeCardItem";
 import { AnimatedImportButton } from "./AnimatedImportButton";
 import {
@@ -51,6 +52,7 @@ export const ResumeWorkbench = () => {
     const [hasConfiguredFolder, setHasConfiguredFolder] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
+    const [isGenerateOpen, setIsGenerateOpen] = useState(false);
     const [isImporting, setIsImporting] = useState(false);
     const jsonFileInputRef = useRef<HTMLInputElement>(null);
     const pdfFileInputRef = useRef<HTMLInputElement>(null);
@@ -348,6 +350,20 @@ export const ResumeWorkbench = () => {
                         {t("dashboard.resumes.myResume")}
                     </h1>
                     <div className="flex items-center space-x-2">
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                        >
+                            <Button
+                                onClick={() => setIsGenerateOpen(true)}
+                                variant="outline"
+                                className="border-primary/40 text-primary hover:bg-primary/10"
+                            >
+                                <Sparkles className="mr-2 h-4 w-4" />
+                                {t("dashboard.generate.entryButton")}
+                            </Button>
+                        </motion.div>
                         <AnimatedImportButton onClick={() => setIsImportDialogOpen(true)} t={t} />
                         <motion.div
                             whileHover={{ scale: 1.05 }}
@@ -443,6 +459,11 @@ export const ResumeWorkbench = () => {
                     pdfFileInputRef={pdfFileInputRef}
                     onJsonFileChange={handleJsonFileChange}
                     onPdfFileChange={handlePdfFileChange}
+                />
+
+                <GenerateResumeDialog
+                    open={isGenerateOpen}
+                    onOpenChange={setIsGenerateOpen}
                 />
             </motion.div>
         </ScrollArea>

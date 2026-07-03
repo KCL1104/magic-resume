@@ -106,9 +106,41 @@
     "sidebar": {
       "appName": "魔方简历",
       "resumes": "我的简历",
+      "applications": "投递管理",
       "settings": "通用设置",
       "templates": "简历模板",
       "ai": "AI服务商"
+    },
+    "generate": {
+      "entryButton": "AI 生成",
+      "title": "根据职位描述生成简历",
+      "description": "粘贴目标职位的 JD，并（可选）提供你现有的简历，AI 会生成一份量身定制的简历以及配套求职信。",
+      "jdLabel": "职位描述（JD）",
+      "jdPlaceholder": "粘贴你要应聘职位的完整 JD...",
+      "sourceLabel": "你现有的简历（选填）",
+      "uploadButton": "上传文件（PDF / HTML / MD / TXT）",
+      "pastePlaceholder": "...或在此粘贴你当前的简历文字",
+      "languageLabel": "输出语言",
+      "generateButton": "生成",
+      "generating": "生成中...",
+      "resultResumeLabel": "定制简历",
+      "resultCoverLetterLabel": "求职信",
+      "stat": {
+        "experience": "{count} 段经历",
+        "projects": "{count} 个项目",
+        "skills": "{count} 项技能"
+      },
+      "copy": "复制",
+      "copied": "已复制",
+      "noCoverLetter": "未生成求职信。",
+      "regenerate": "返回 / 重新生成",
+      "openInEditor": "在编辑器中打开",
+      "applied": "简历已创建，正在打开编辑器...",
+      "errors": {
+        "jdRequired": "请先输入职位描述。",
+        "generateFailed": "生成失败，请重试。",
+        "copyFailed": "复制失败。"
+      }
     },
     "resumes": {
       "created": "创建于",

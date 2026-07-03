@@ -105,9 +105,41 @@
     "sidebar": {
       "appName": "Magic Resume",
       "resumes": "Resumes",
+      "applications": "Applications",
       "settings": "Settings",
       "templates": "Templates",
       "ai": "AI Config"
+    },
+    "generate": {
+      "entryButton": "AI Generate",
+      "title": "Generate Resume from a Job Description",
+      "description": "Paste a target job description and (optionally) your existing resume. The AI tailors a full resume and a matching cover letter.",
+      "jdLabel": "Job Description (JD)",
+      "jdPlaceholder": "Paste the full job description you are applying for...",
+      "sourceLabel": "Your existing resume (optional)",
+      "uploadButton": "Upload file (PDF / HTML / MD / TXT)",
+      "pastePlaceholder": "...or paste your current resume text here",
+      "languageLabel": "Output language",
+      "generateButton": "Generate",
+      "generating": "Generating...",
+      "resultResumeLabel": "Tailored resume",
+      "resultCoverLetterLabel": "Cover letter",
+      "stat": {
+        "experience": "{count} experience",
+        "projects": "{count} projects",
+        "skills": "{count} skills"
+      },
+      "copy": "Copy",
+      "copied": "Copied",
+      "noCoverLetter": "No cover letter was generated.",
+      "regenerate": "Back / Regenerate",
+      "openInEditor": "Open in editor",
+      "applied": "Resume created. Opening editor...",
+      "errors": {
+        "jdRequired": "Please enter a job description first.",
+        "generateFailed": "Generation failed. Please try again.",
+        "copyFailed": "Copy failed."
+      }
     },
     "resumes": {
       "created": "Created At",
