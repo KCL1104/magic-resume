@@ -47,11 +47,18 @@ export const LANGUAGE_LABEL: Record<string, string> = {
   it: "Italiano",
 };
 
-/** Options offered in the picker for Slice A (per the user's decision). */
+/** Options offered in the generation language picker. */
 export const GENERATION_LANGUAGE_OPTIONS: GenerationLanguage[] = [
   "zh-TW",
   "zh-CN",
   "en",
+  "ja",
+  "ko",
+  "es",
+  "fr",
+  "de",
+  "pt",
+  "it",
 ];
 
 /** Resolve a language code (or free-form string) to the English prompt name. */

@@ -63,6 +63,7 @@ export default function AIPolishDialog({
     openaiApiEndpoint,
     geminiApiKey,
     geminiModelId,
+    generationLanguage,
     isConfigured
   } = useAIConfigStore();
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -152,7 +153,8 @@ export default function AIPolishDialog({
           apiEndpoint: selectedModel === "openai" ? openaiApiEndpoint : undefined,
           model: config.requiresModelId ? modelId : config.defaultModel,
           modelType: selectedModel,
-          customInstructions: customInstructions.trim() || undefined
+          customInstructions: customInstructions.trim() || undefined,
+          language: generationLanguage
         }),
         signal: abortControllerRef.current.signal
       });
